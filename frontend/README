@@ -18,17 +18,6 @@ Choose the maximum number of restaurant results
 
 View restaurant names and addresses
 
-View distance from the searched location
-
-View restaurant price information when available
-
-View restaurant photos when available
-
-See a clean placeholder when a restaurant photo is unavailable
-
-Open restaurant locations in OpenStreetMap
-
-Use the application on desktop, MacBook, tablet, and mobile screen sizes
 
 Project Structure
 
@@ -456,16 +445,16 @@ OpenStreetMap
 
 ### Screenshot 1
 
-![Boston Food Finder Screenshot 1](1.png)
+!(1.png)
 
 ### Screenshot 2
 
-![Boston Food Finder Screenshot 2](2.png)
+!(2.png)
 
 ### Screenshot 3
 
-![Boston Food Finder Screenshot 3](3.png)
+!(3.png)
 
 ### Screenshot 4
 
-![Boston Food Finder Screenshot 4](4.png)
+!(4.png)
