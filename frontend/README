@@ -1,0 +1,471 @@
+Boston Food Finder
+
+Boston Food Finder is a responsive restaurant discovery web application that lets users search for restaurants by cuisine, location, search radius in miles, and number of results.
+
+The project uses a FastAPI backend with the Geoapify API and a responsive HTML/CSS/JavaScript frontend.
+
+Features
+
+Users can:
+
+Search restaurants by cuisine
+
+Search by city or location
+
+Choose a search radius in miles
+
+Choose the maximum number of restaurant results
+
+View restaurant names and addresses
+
+View distance from the searched location
+
+View restaurant price information when available
+
+View restaurant photos when available
+
+See a clean placeholder when a restaurant photo is unavailable
+
+Open restaurant locations in OpenStreetMap
+
+Use the application on desktop, MacBook, tablet, and mobile screen sizes
+
+Project Structure
+
+boston-food-finder/
+│
+├── backend/
+│   ├── app.py
+│   ├── results_pipeline.py
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── README.md
+├── 1.png
+├── 2.png
+├── 3.png
+└── 4.png
+
+.env should stay local and should not be committed to GitHub.
+
+Backend
+
+The backend is built with Python and FastAPI.
+
+It is responsible for:
+
+Receiving restaurant search requests from the frontend
+
+Accepting:
+
+cuisine
+
+location
+
+search radius in miles
+
+result limit
+
+Converting the location into latitude and longitude using the Geoapify Geocoding API
+
+Converting the selected search radius from miles into meters
+
+Searching for nearby restaurants using the Geoapify Places API
+
+Retrieving additional restaurant details when available
+
+Returning restaurant information to the frontend as JSON
+
+Main Backend Files
+
+backend/app.py
+
+Runs the FastAPI application and provides endpoints such as:
+
+GET /
+GET /health
+GET /restaurants
+
+Example request:
+
+/restaurants?cuisine=Chinese&location=Boston&miles=5&limit=10
+
+backend/results_pipeline.py
+
+Contains the restaurant search logic, including:
+
+Geoapify API key loading
+
+Location geocoding
+
+Cuisine search
+
+Nearby restaurant search
+
+Restaurant detail retrieval
+
+Distance handling
+
+Result formatting
+
+Frontend
+
+The frontend is built with:
+
+HTML
+
+CSS
+
+JavaScript
+
+It is responsible for:
+
+Collecting the user's search information
+
+Sending requests to the FastAPI backend
+
+Receiving restaurant JSON data
+
+Creating restaurant result cards
+
+Displaying:
+
+restaurant name
+
+address
+
+distance
+
+price when available
+
+photo when available
+
+Showing a styled placeholder when no restaurant image is available
+
+Opening restaurant coordinates in OpenStreetMap
+
+Handling loading, error, and no-results states
+
+Adapting to desktop, tablet, and mobile screen sizes
+
+The search interface contains:
+
+Cuisine | Location | Miles | Results | Find Restaurants
+
+Example:
+
+Cuisine: Thai
+Location: Boston
+Miles: 10
+Results: 10
+
+Data Source
+
+Restaurant and location information is retrieved using the Geoapify API, which uses OpenStreetMap data.
+
+Some restaurant information may not be available in the source data, including:
+
+Photos
+
+Prices
+
+Phone numbers
+
+Websites
+
+Opening hours
+
+The frontend handles missing data gracefully by displaying fallback text such as:
+
+Price unavailable
+
+and a styled restaurant placeholder when no image is available.
+
+Setup
+
+1. Clone the Repository
+
+git clone YOUR_REPOSITORY_URL
+cd boston-food-finder
+
+2. Create a Virtual Environment
+
+On macOS or Linux:
+
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install Backend Dependencies
+
+python3 -m pip install -r backend/requirements.txt
+
+The backend uses packages including:
+
+fastapi
+uvicorn
+requests
+python-dotenv
+
+4. Configure the Geoapify API Key
+
+Create a .env file in the project root:
+
+boston-food-finder/.env
+
+Add:
+
+GEOAPIFY_API_KEY=your_geoapify_api_key_here
+
+Replace the placeholder with your real Geoapify API key.
+
+Important
+
+Do not commit the .env file.
+
+Your .gitignore should include:
+
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+Running the Application
+
+The frontend and backend run separately, so use two Terminal windows.
+
+Terminal 1 — Start the Backend
+
+From the project root:
+
+cd backend
+uvicorn app:app --reload
+
+The backend should start at:
+
+http://127.0.0.1:8000
+
+You can verify the API is running by opening:
+
+http://127.0.0.1:8000/
+
+Expected response:
+
+{
+  "message": "Boston Food Finder API is running"
+}
+
+Health endpoint:
+
+http://127.0.0.1:8000/health
+
+FastAPI documentation:
+
+http://127.0.0.1:8000/docs
+
+Terminal 2 — Start the Frontend
+
+Open another Terminal window.
+
+From the project root:
+
+cd frontend
+python3 -m http.server 5500
+
+Open the frontend in a browser:
+
+http://localhost:5500
+
+Example Search
+
+Enter:
+
+Cuisine: Chinese
+Location: Boston
+Miles: 5
+Results: 10
+
+Then click:
+
+Find Restaurants
+
+The frontend sends a request similar to:
+
+http://127.0.0.1:8000/restaurants?cuisine=Chinese&location=Boston&miles=5&limit=10
+
+Application flow:
+
+User Search
+    ↓
+Frontend JavaScript
+    ↓
+FastAPI Backend
+    ↓
+Geoapify Geocoding API
+    ↓
+Geoapify Places API
+    ↓
+Restaurant Results
+    ↓
+JSON Response
+    ↓
+Frontend Restaurant Cards
+
+API Parameters
+
+Parameter
+
+Description
+
+Example
+
+cuisine
+
+Type of food
+
+Thai
+
+location
+
+Search location
+
+Boston, MA
+
+miles
+
+Search radius in miles
+
+5
+
+limit
+
+Maximum number of results
+
+10
+
+Example:
+
+/restaurants?cuisine=Italian&location=Boston&miles=5&limit=10
+
+The current application supports:
+
+Maximum search radius: 50 miles
+Maximum results: 20 restaurants
+
+Troubleshooting
+
+ModuleNotFoundError
+
+If Python cannot find a package such as requests, fastapi, or dotenv:
+
+source venv/bin/activate
+python3 -m pip install -r backend/requirements.txt
+
+Geoapify API Key Not Found
+
+Make sure .env exists in the project root and contains:
+
+GEOAPIFY_API_KEY=your_actual_api_key
+
+Do not place the real API key in source files.
+
+Frontend Cannot Reach Backend
+
+Make sure both servers are running at the same time:
+
+Backend:
+
+http://127.0.0.1:8000
+
+Frontend:
+
+http://localhost:5500
+
+CSS Changes Are Not Showing
+
+On macOS Chrome, perform a hard refresh:
+
+Command + Shift + R
+
+You can also verify the stylesheet is loading by opening:
+
+http://localhost:5500/styles.css
+
+Future Integration
+
+The restaurant search flow can later be connected directly to the project's chat interface.
+
+For example, chat output could provide:
+
+{
+  "cuisine": "Thai",
+  "location": "Boston",
+  "miles": 5,
+  "limit": 10
+}
+
+Those values can then be passed directly to the restaurant search pipeline.
+
+Security
+
+Never commit:
+
+.env
+
+Do not place API keys directly inside:
+
+app.py
+results_pipeline.py
+app.js
+index.html
+
+API keys should remain in local environment variables.
+
+Technologies
+
+Python
+
+FastAPI
+
+Uvicorn
+
+Requests
+
+python-dotenv
+
+JavaScript
+
+HTML
+
+CSS
+
+Geoapify API
+
+OpenStreetMap
+
+
+## Screenshots
+
+### Screenshot 1
+
+![Boston Food Finder Screenshot 1](1.png)
+
+### Screenshot 2
+
+![Boston Food Finder Screenshot 2](2.png)
+
+### Screenshot 3
+
+![Boston Food Finder Screenshot 3](3.png)
+
+### Screenshot 4
+
+![Boston Food Finder Screenshot 4](4.png)

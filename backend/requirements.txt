@@ -1,0 +1,5 @@
+requests
+python-dotenv
+fastapi
+uvicorn
+python3 -m pip install -r backend/requirements.txt

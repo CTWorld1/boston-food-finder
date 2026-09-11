@@ -12,4 +12,5 @@ venv/
 .DS_Store
 
 # VS Code
-.vscode/
+.vscode/.env
+.DS_Store
